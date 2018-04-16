@@ -438,6 +438,16 @@ public class SectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
     }
 
     /**
+     * Return the item view type relative to the section.
+     *
+     * @param itemViewType item view type of the item in the adapter
+     * @return item view type of the item in the section
+     */
+    public static int getItemViewTypeInSection(int itemViewType) {
+        return itemViewType % VIEW_TYPE_QTY;
+    }
+
+    /**
      * Return the item position relative to the section.
      *
      * @param position position of the item in the adapter
