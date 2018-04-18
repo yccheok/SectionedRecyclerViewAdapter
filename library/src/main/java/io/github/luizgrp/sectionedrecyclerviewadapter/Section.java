@@ -5,6 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 /**
  * Abstract Section to be used with {@link SectionedRecyclerViewAdapter}.
  */
@@ -279,6 +281,25 @@ public abstract class Section {
         return emptyResourceId;
     }
 
+    public final void onBindContentViewHolder(RecyclerView.ViewHolder holder, int position, List<Object> payloads) {
+        switch (state) {
+            case LOADING:
+                onBindLoadingViewHolder(holder, payloads);
+                break;
+            case LOADED:
+                onBindItemViewHolder(holder, position, payloads);
+                break;
+            case FAILED:
+                onBindFailedViewHolder(holder, payloads);
+                break;
+            case EMPTY:
+                onBindEmptyViewHolder(holder, payloads);
+                break;
+            default:
+                throw new IllegalStateException("Invalid state");
+        }
+    }
+
     /**
      * Bind the data to the ViewHolder for the Content of this Section, that can be the Items,
      * Loading view or Failed view, depending on the current state of the section.
@@ -361,6 +382,10 @@ public abstract class Section {
      */
     public abstract RecyclerView.ViewHolder getItemViewHolder(View view);
 
+    public void onBindItemViewHolder(RecyclerView.ViewHolder holder, int position, List<Object> payloads) {
+        onBindItemViewHolder(holder, position);
+    }
+
     /**
      * Bind the data to the ViewHolder for an Item of this Section.
      *
@@ -389,6 +414,10 @@ public abstract class Section {
      */
     public RecyclerView.ViewHolder getHeaderViewHolder(View view) {
         return new SectionedRecyclerViewAdapter.EmptyViewHolder(view);
+    }
+
+    public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, List<Object> payloads) {
+        onBindHeaderViewHolder(holder);
     }
 
     /**
@@ -422,6 +451,10 @@ public abstract class Section {
         return new SectionedRecyclerViewAdapter.EmptyViewHolder(view);
     }
 
+    public void onBindFooterViewHolder(RecyclerView.ViewHolder holder, List<Object> payloads) {
+        onBindFooterViewHolder(holder);
+    }
+
     /**
      * Bind the data to the ViewHolder for the Footer of this Section.
      *
@@ -451,6 +484,10 @@ public abstract class Section {
      */
     public RecyclerView.ViewHolder getLoadingViewHolder(View view) {
         return new SectionedRecyclerViewAdapter.EmptyViewHolder(view);
+    }
+
+    public void onBindLoadingViewHolder(RecyclerView.ViewHolder holder, List<Object> payloads) {
+        onBindLoadingViewHolder(holder);
     }
 
     /**
@@ -484,6 +521,10 @@ public abstract class Section {
         return new SectionedRecyclerViewAdapter.EmptyViewHolder(view);
     }
 
+    public void onBindFailedViewHolder(RecyclerView.ViewHolder holder, List<Object> payloads) {
+        onBindFailedViewHolder(holder);
+    }
+
     /**
      * Bind the data to the ViewHolder for the Failed state of this Section.
      *
@@ -513,6 +554,10 @@ public abstract class Section {
      */
     public RecyclerView.ViewHolder getEmptyViewHolder(View view) {
         return new SectionedRecyclerViewAdapter.EmptyViewHolder(view);
+    }
+
+    public void onBindEmptyViewHolder(RecyclerView.ViewHolder holder, List<Object> payloads) {
+        onBindEmptyViewHolder(holder);
     }
 
     /**
