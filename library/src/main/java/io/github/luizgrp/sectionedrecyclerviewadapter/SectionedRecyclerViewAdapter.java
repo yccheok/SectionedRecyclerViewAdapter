@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -253,6 +254,51 @@ public class SectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
      */
     public void removeAllSections() {
         this.sections.clear();
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List<Object> payloads) {
+
+        int currentPos = 0;
+
+        for (Map.Entry<String, Section> entry : sections.entrySet()) {
+            Section section = entry.getValue();
+
+            // ignore invisible sections
+            if (!section.isVisible()) {
+                continue;
+            }
+
+            int sectionTotal = section.getSectionItemsTotal();
+
+            // check if position is in this section
+            if (position >= currentPos && position <= (currentPos + sectionTotal - 1)) {
+
+                if (section.hasHeader()) {
+                    if (position == currentPos) {
+                        // delegate the binding to the section header
+                        getSectionForPosition(position).onBindHeaderViewHolder(holder, payloads);
+                        return;
+                    }
+                }
+
+                if (section.hasFooter()) {
+                    if (position == (currentPos + sectionTotal - 1)) {
+                        // delegate the binding to the section header
+                        getSectionForPosition(position).onBindFooterViewHolder(holder, payloads);
+                        return;
+                    }
+                }
+
+                // delegate the binding to the section content
+                getSectionForPosition(position).onBindContentViewHolder(holder, getPositionInSection(position), payloads);
+                return;
+            }
+
+            currentPos += sectionTotal;
+        }
+
+        throw new IndexOutOfBoundsException("Invalid position");
     }
 
     @Override
