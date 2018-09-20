@@ -46,6 +46,22 @@ public class SectionedRecyclerViewAdapterTest {
     }
 
     @Test
+    public void getSectionItemViewTypeForAdapterViewType() {
+        assertThat(SectionedRecyclerViewAdapter.getSectionItemViewTypeForAdapterViewType(0), is(SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER));
+        assertThat(SectionedRecyclerViewAdapter.getSectionItemViewTypeForAdapterViewType(1), is(SectionedRecyclerViewAdapter.VIEW_TYPE_FOOTER));
+        assertThat(SectionedRecyclerViewAdapter.getSectionItemViewTypeForAdapterViewType(2), is(SectionedRecyclerViewAdapter.VIEW_TYPE_ITEM_LOADED));
+        assertThat(SectionedRecyclerViewAdapter.getSectionItemViewTypeForAdapterViewType(3), is(SectionedRecyclerViewAdapter.VIEW_TYPE_LOADING));
+        assertThat(SectionedRecyclerViewAdapter.getSectionItemViewTypeForAdapterViewType(4), is(SectionedRecyclerViewAdapter.VIEW_TYPE_FAILED));
+        assertThat(SectionedRecyclerViewAdapter.getSectionItemViewTypeForAdapterViewType(5), is(SectionedRecyclerViewAdapter.VIEW_TYPE_EMPTY));
+        assertThat(SectionedRecyclerViewAdapter.getSectionItemViewTypeForAdapterViewType(6), is(SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER));
+        assertThat(SectionedRecyclerViewAdapter.getSectionItemViewTypeForAdapterViewType(7), is(SectionedRecyclerViewAdapter.VIEW_TYPE_FOOTER));
+        assertThat(SectionedRecyclerViewAdapter.getSectionItemViewTypeForAdapterViewType(8), is(SectionedRecyclerViewAdapter.VIEW_TYPE_ITEM_LOADED));
+        assertThat(SectionedRecyclerViewAdapter.getSectionItemViewTypeForAdapterViewType(9), is(SectionedRecyclerViewAdapter.VIEW_TYPE_LOADING));
+        assertThat(SectionedRecyclerViewAdapter.getSectionItemViewTypeForAdapterViewType(10), is(SectionedRecyclerViewAdapter.VIEW_TYPE_FAILED));
+        assertThat(SectionedRecyclerViewAdapter.getSectionItemViewTypeForAdapterViewType(11), is(SectionedRecyclerViewAdapter.VIEW_TYPE_EMPTY));
+    }
+
+    @Test
     public void getPositionInSection_withAdapterWithInvisibleSection_returnsCorrectPosition() {
         // Given
         addHeadedFootedStatelessSectionStubToAdapter();
